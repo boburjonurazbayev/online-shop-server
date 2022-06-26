@@ -1,0 +1,2 @@
+/products?categoryId=1___InternalServerError___1656202872620___500___Cannot set headers after they are sent to the client
+/products?categoryId=1___InternalServerError___1656203206345___500___pr is not defined
