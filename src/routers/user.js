@@ -10,6 +10,10 @@ router.post("/categories", validation, controller.POST);
 router.post("/subcategories", validation, controller.POST);
 router.post("/products", validation, controller.POST);
 
+router.put("/categories", validation,  controller.PUT);
+router.put("/subcategories", validation,  controller.PUT);
+router.put("/products", validation,  controller.PUT);
+
 router.get("/categories", controller.GET);
 router.get("/categories/:categoriesId", controller.GET);
 

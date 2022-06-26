@@ -3,7 +3,10 @@ import {
   registerScheme,
   postCategories,
   postSubCategories,
-  postProducts
+  postProducts,
+  putProducts,
+  putSubCategories,
+  putCategories,
 } from "../utils/validation.js";
 import { ValidationError } from "../utils/error.js";
 import jwt from "../utils/jwt.js";
@@ -36,15 +39,38 @@ export default (req, res, next) => {
       if (error) throw error;
     }
 
-    if (req.url == "/subcategories" && req.method == "POST") {
+    if (req.url == "/products" && req.method == "POST") {
       let { userId } = jwt.verify(req.headers.token);
       req.body.userId = userId;
 
       let { error } = postProducts.validate(req.body);
       if (error) throw error;
     }
-    
-    
+
+    if (req.url == "/categories" && req.method == "PUT") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = putCategories.validate(req.body);
+      if (error) throw error;
+    }
+
+    if (req.url == "/subcategories" && req.method == "PUT") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = putSubCategories.validate(req.body);
+      if (error) throw error;
+    }
+
+    if (req.url == "/products" && req.method == "PUT") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = putProducts.validate(req.body);
+      if (error) throw error;
+    }
+
     return next();
   } catch (error) {
     return next(new ValidationError(401, error.message));

@@ -1,2 +1,6 @@
 /products?categoryId=1___InternalServerError___1656202872620___500___Cannot set headers after they are sent to the client
 /products?categoryId=1___InternalServerError___1656203206345___500___pr is not defined
+/products___InternalServerError___1656214087640___500___Assignment to constant variable.
+/products___InternalServerError___1656214173474___500___Assignment to constant variable.
+/products___InternalServerError___1656214270000___500___Assignment to constant variable.
+/products___InternalServerError___1656214282439___500___Assignment to constant variable.

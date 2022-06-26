@@ -35,3 +35,21 @@ export const postProducts = Joi.object({
   color: Joi.string().required(),
   model: Joi.string().required(),
 });
+
+export const putProducts = Joi.object({
+  userId: Joi.required(),
+  productId: Joi.string().required(),
+  productName: Joi.string().alphanum().min(2).max(50).required(),
+});
+
+export const putSubCategories = Joi.object({
+  userId: Joi.required(),
+  subCategoryId: Joi.string().required(),
+  subCategoryName: Joi.string().alphanum().min(2).max(50).required(),
+});
+
+export const putCategories = Joi.object({
+  userId: Joi.required(),
+  categoryId: Joi.string().required(),
+  categoryName: Joi.string().alphanum().min(2).max(50).required(),
+});

@@ -110,7 +110,9 @@ const GET = (req, res, next) => {
         });
       });
 
-      changeCategories = changeCategories.find(el => el.categoryId == req.params.categoriesId)
+      changeCategories = changeCategories.find(
+        (el) => el.categoryId == req.params.categoriesId
+      );
       res.status(200).json(changeCategories);
     }
 
@@ -162,8 +164,10 @@ const GET = (req, res, next) => {
         });
       });
 
-      changeSubcategories = changeSubcategories.find(el => el.subCategoryId = req.params.subcategoriesId)
-      
+      changeSubcategories = changeSubcategories.find(
+        (el) => (el.subCategoryId = req.params.subcategoriesId)
+      );
+
       res.status(200).json(changeSubcategories);
     }
 
@@ -257,89 +261,153 @@ const GET = (req, res, next) => {
 
 const POST = (req, res, next) => {
   try {
-    const categories = read("categories")
-    const subcategories = read("subcategories")
-    const products = read("products")
+    const categories = read("categories");
+    const subcategories = read("subcategories");
+    const products = read("products");
 
     if (req.url == "/categories") {
+      let category_id = categories.length
+        ? categories.at(-1).category_id + 1
+        : 1;
 
-    let category_id = categories.length ? categories.at(-1).category_id + 1 : 1;
-      
-    let category = categories.find((category) => category.category_name == req.body.categoryName);
-
-    if (category) {
-      return next(
-        new AuthorizationError(401, "This category name is already exist")
+      let category = categories.find(
+        (category) => category.category_name == req.body.categoryName
       );
-    }
 
-    req.body.category_id = category_id
-    req.body.category_name = req.body.categoryName
+      if (category) {
+        return next(
+          new AuthorizationError(401, "This category name is already exist")
+        );
+      }
 
-    delete req.body.categoryName
-    delete req.body.userId
+      req.body.category_id = category_id;
+      req.body.category_name = req.body.categoryName;
 
-    categories.push(req.body)
-    write("categories", categories)
-      
-    res.status(201).json(categories)
+      delete req.body.categoryName;
+      delete req.body.userId;
+
+      categories.push(req.body);
+      write("categories", categories);
+
+      res.status(201).json(categories);
     }
 
     if (req.url == "/subcategories") {
+      let sub_category_id = subcategories.length
+        ? subcategories.at(-1).sub_category_id + 1
+        : 1;
 
-      let sub_category_id = subcategories.length ? subcategories.at(-1).sub_category_id + 1 : 1;
-        
-      let subcategory = subcategories.find((category) => category.sub_category_name == req.body.subCategoryName);
-  
+      let subcategory = subcategories.find(
+        (category) => category.sub_category_name == req.body.subCategoryName
+      );
+
       if (subcategory) {
         return next(
           new AuthorizationError(401, "This sub category name is already exist")
         );
       }
-  
-      req.body.sub_category_id = sub_category_id
-      req.body.category_id = req.body.categoryId 
-      req.body.sub_category_name = req.body.subCategoryName
-  
-      delete req.body.subCategoryName
-      delete req.body.userId
-      delete req.body.categoryId
-      
-      subcategories.push(req.body)
-      write("subcategories", subcategories)
-        
-      res.status(201).json(subcategories)
+
+      req.body.sub_category_id = sub_category_id;
+      req.body.category_id = req.body.categoryId;
+      req.body.sub_category_name = req.body.subCategoryName;
+
+      delete req.body.subCategoryName;
+      delete req.body.userId;
+      delete req.body.categoryId;
+
+      subcategories.push(req.body);
+      write("subcategories", subcategories);
+
+      res.status(201).json(subcategories);
+    }
+
+    if (req.url == "/products") {
+      let product_id = products.length ? products.at(-1).product_id + 1 : 1;
+
+      let product = products.find(
+        (product) => product.product_name == req.body.productName
+      );
+
+      if (product) {
+        return next(
+          new AuthorizationError(401, "This product is already exist")
+        );
       }
-    
-      if (req.url == "/products") {
 
-        let product_id = products.length ? products.at(-1).product_id + 1 : 1;
-          
-        let product = products.find((product) => product.product_name == req.body.productName);
-    
-        if (product) {
-          return next(
-            new AuthorizationError(401, "This product is already exist")
-          );
-        }
-    
-        req.body.product_id = product_id
-        req.body.sub_category_id = req.body.subCategoryId 
-        req.body.product_name = req.body.productName
-    
-        delete req.body.productName
-        delete req.body.userId
-        delete req.body.subCategoryId
+      req.body.product_id = product_id;
+      req.body.sub_category_id = req.body.subCategoryId;
+      req.body.product_name = req.body.productName;
 
-        products.push(req.body)
-        write("products", products)
-          
-        res.status(201).json(products)
-        }
+      delete req.body.productName;
+      delete req.body.userId;
+      delete req.body.subCategoryId;
 
+      products.push(req.body);
+      write("products", products);
+
+      res.status(201).json(products);
+    }
   } catch (error) {
     return next(new InternalServerError(500, error.message));
   }
 };
 
-export default { LOGIN, REGISTER, GET, POST };
+const PUT = (req, res, next) => {
+  try {
+    const categories = read("categories");
+    const subcategories = read("subcategories");
+    const products = read("products");
+
+    if (req.url == "/categories") {
+      let newCategory = [];
+      categories.forEach((category) => {
+        if (category.category_id == req.body.categoryId) {
+          category.category_name = req.body.categoryName;
+        }
+
+        newCategory.push(category);
+      });
+
+      write("categories", newCategory);
+
+      res.status(201).json(newCategory);
+    }
+
+    if (req.url == "/subcategories") {
+
+     
+      let newSubCategory = [];
+      subcategories.forEach((subcategory) => {
+        if (subcategory.sub_category_id == req.body.subCategoryId) {
+          subcategory.sub_category_name = req.body.subCategoryName;
+        }
+
+        newSubCategory.push(subcategory);
+      });
+
+      write("subcategories", newSubCategory);
+
+      res.status(201).json(newSubCategory);
+      
+      }
+
+    if (req.url == "/products") {
+      let newProducts = [];
+      products.forEach((product) => {
+        if (product.product_id == req.body.productId) {
+          product.product_name = req.body.productName;
+        }
+
+        newProducts.push(product);
+      });
+
+      write("products", newProducts);
+
+      res.status(201).json(newProducts);
+    }
+  } catch (error) {
+    return next(new InternalServerError(500, error.message));
+  }
+};
+
+export default { LOGIN, REGISTER, GET, POST, PUT };
