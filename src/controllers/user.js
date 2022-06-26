@@ -410,4 +410,59 @@ const PUT = (req, res, next) => {
   }
 };
 
-export default { LOGIN, REGISTER, GET, POST, PUT };
+const DELETE = (req, res, next) => {
+  try {
+    const categories = read("categories");
+    const subcategories = read("subcategories");
+    const products = read("products");
+
+    if (req.url == "/categories") {
+      let newCategory = [];
+      categories.forEach((category) => {
+        if (category.category_id != req.body.categoryId) {
+          newCategory.push(category);
+        }
+
+      });
+
+      write("categories", newCategory);
+
+      res.status(201).json(newCategory);
+    }
+
+    if (req.url == "/subcategories") {
+
+     
+      let newSubCategory = [];
+      subcategories.forEach((subcategory) => {
+        if (subcategory.sub_category_id != req.body.subCategoryId) {
+          newSubCategory.push(subcategory);
+        }
+
+      });
+
+      write("subcategories", newSubCategory);
+
+      res.status(201).json(newSubCategory);
+      
+      }
+
+    if (req.url == "/products") {
+      let newProducts = [];
+      products.forEach((product) => {
+        if (product.product_id != req.body.productId) {
+          newProducts.push(product);
+        }
+
+      });
+
+      write("products", newProducts);
+
+      res.status(201).json(newProducts);
+    }
+  } catch (error) {
+    return next(new InternalServerError(500, error.message));
+  }
+};
+
+export default { LOGIN, REGISTER, GET, POST, PUT, DELETE };

@@ -23,10 +23,5 @@
         "sub_category_id": 5,
         "category_id": 2,
         "sub_category_name": "shirts"
-    },
-    {
-        "sub_category_id": 6,
-        "category_id": "3",
-        "sub_category_name": "millenium"
     }
 ]

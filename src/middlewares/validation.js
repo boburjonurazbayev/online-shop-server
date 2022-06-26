@@ -7,6 +7,9 @@ import {
   putProducts,
   putSubCategories,
   putCategories,
+  deleteProducts,
+  deleteSubCategories,
+  deleteCategories,
 } from "../utils/validation.js";
 import { ValidationError } from "../utils/error.js";
 import jwt from "../utils/jwt.js";
@@ -68,6 +71,30 @@ export default (req, res, next) => {
       req.body.userId = userId;
 
       let { error } = putProducts.validate(req.body);
+      if (error) throw error;
+    }
+
+    if (req.url == "/categories" && req.method == "DELETE") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = deleteCategories.validate(req.body);
+      if (error) throw error;
+    }
+
+    if (req.url == "/subcategories" && req.method == "DELETE") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = deleteSubCategories.validate(req.body);
+      if (error) throw error;
+    }
+
+    if (req.url == "/products" && req.method == "DELETE") {
+      let { userId } = jwt.verify(req.headers.token);
+      req.body.userId = userId;
+
+      let { error } = deleteProducts.validate(req.body);
       if (error) throw error;
     }
 

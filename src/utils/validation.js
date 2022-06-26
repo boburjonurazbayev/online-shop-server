@@ -53,3 +53,18 @@ export const putCategories = Joi.object({
   categoryId: Joi.string().required(),
   categoryName: Joi.string().alphanum().min(2).max(50).required(),
 });
+
+export const deleteProducts = Joi.object({
+  userId: Joi.required(),
+  productId: Joi.string().required(),
+});
+
+export const deleteSubCategories = Joi.object({
+  userId: Joi.required(),
+  subCategoryId: Joi.string().required(),
+});
+
+export const deleteCategories = Joi.object({
+  userId: Joi.required(),
+  categoryId: Joi.string().required(),
+});

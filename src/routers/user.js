@@ -14,6 +14,10 @@ router.put("/categories", validation,  controller.PUT);
 router.put("/subcategories", validation,  controller.PUT);
 router.put("/products", validation,  controller.PUT);
 
+router.delete("/categories", validation,  controller.DELETE);
+router.delete("/subcategories", validation,  controller.DELETE);
+router.delete("/products", validation,  controller.DELETE);
+
 router.get("/categories", controller.GET);
 router.get("/categories/:categoriesId", controller.GET);
 
